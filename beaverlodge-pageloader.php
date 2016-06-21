@@ -15,10 +15,12 @@ function beaverlodge_pageloader_scripts() {
 add_action( 'wp_enqueue_scripts', 'beaverlodge_pageloader_scripts' );
 
 function beaverlodge_pageloader_styles() {
-        $pageloader = get_theme_mod( 'beaverlodge-pageloader', plugins_url( 'images/pageloader.gif', __FILE__ ) );
+        $pageloader = get_theme_mod( 'pagloader-upload', plugins_url( 'images/pageloader.gif', __FILE__ ) );
+        $pageloaderbackground = get_theme_mod( 'pageloader-color-setting', '#ffffff' );
+    var_dump($pageloader);
         $custom_css = "
                 .bl-pageloader {
-                        background: url({$pageloader}) center no-repeat #fff;
+                        background: url({$pageloader}) center no-repeat {$pageloaderbackground};
                 }";
         wp_add_inline_style( 'beaverlodge-pageloader', $custom_css );
 }
@@ -35,17 +37,33 @@ function beaverlodge_pageloader_register( $wp_customize ) {
         )
     );
     $wp_customize->add_setting( 
-        'beaverlodge_pageloader', array(
+        'pagloader-upload', array(
         'default' => plugins_url( 'images/pageloader.gif', __FILE__ ),
     ) );
     $wp_customize->add_control(
         new WP_Customize_Image_Control(
             $wp_customize,
-            'beaverlodge-pageloader',
+            'pagloader-upload',
             array(
-                'label' => 'Pageloader Image',
+                'label' => 'Image Upload',
                 'section' => 'bl_pageloader',
-                'settings' => 'beaverlodge_pageloader'
+                'settings' => 'pagloader-upload'
+            )
+        )
+    );
+    $wp_customize->add_setting( 
+        'pageloader-color-setting', array(
+            'default' => '#ffffff',
+            'sanitize_callback' => 'sanitize_hex_color',
+    ) );
+    $wp_customize->add_control(
+        new WP_Customize_Color_Control(
+            $wp_customize,
+            'pageloader-color-setting',
+            array(
+                'label' => 'Background Color',
+                'section' => 'bl_pageloader',
+                'settings' => 'pageloader-color-setting',
             )
         )
     );
