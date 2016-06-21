@@ -17,7 +17,7 @@ add_action( 'wp_enqueue_scripts', 'beaverlodge_pageloader_scripts' );
 function beaverlodge_pageloader_styles() {
         $pageloader = get_theme_mod( 'pagloader-upload', plugins_url( 'images/pageloader.gif', __FILE__ ) );
         $pageloaderbackground = get_theme_mod( 'pageloader-color-setting', '#ffffff' );
-    var_dump($pageloader);
+
         $custom_css = "
                 .bl-pageloader {
                         background: url({$pageloader}) center no-repeat {$pageloaderbackground};
