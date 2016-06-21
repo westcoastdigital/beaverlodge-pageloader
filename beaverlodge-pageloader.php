@@ -3,7 +3,7 @@
 Plugin Name: Beaverlodge Pageloader
 Plugin URI: https://beaverlodgehq.com
 Description: Add animated pageloader to your site
-Version: 1.0.0
+Version: 1.0.3
 Author: Beaverlodge HQ
 Author URI: https://beaverlodgehq.com
 */
@@ -69,3 +69,11 @@ function beaverlodge_pageloader_register( $wp_customize ) {
     );
 }
 add_action( 'customize_register', 'beaverlodge_pageloader_register' );
+
+
+
+function beaverlodge_pageloader_svg($mimes) {
+  $mimes['svg'] = 'image/svg+xml';
+  return $mimes;
+}
+add_filter('upload_mimes', 'beaverlodge_pageloader_svg');
